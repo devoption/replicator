@@ -1,0 +1,21 @@
+{
+    "agents": [
+        "cursor",
+        "codex",
+        "opencode",
+        "gemini",
+        "amp",
+        "claude_code",
+        "copilot",
+        "junie"
+    ],
+    "guidelines": true,
+    "mcp": true,
+    "nightwatch_mcp": false,
+    "sail": false,
+    "skills": [
+        "laravel-best-practices",
+        "pest-testing",
+        "tailwindcss-development"
+    ]
+}

@@ -45,6 +45,11 @@
             'icon' => 'heroicon-o-users',
         ],
         [
+            'label' => 'Notifications',
+            'href' => route('admin.notifications.index'),
+            'icon' => 'heroicon-o-bell',
+        ],
+        [
             'label' => 'Roles',
             'href' => route('admin.roles.index'),
             'icon' => 'heroicon-o-shield-check',

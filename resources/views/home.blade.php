@@ -65,25 +65,22 @@
 
 <x-layouts.app-shell :title="config('app.name', 'Replicator')" :toolbar-items="$toolbarItems" :context-items="$contextItems">
     <div class="mx-auto max-w-5xl space-y-8">
-        <section class="space-y-3">
-            <p class="text-sm font-medium uppercase tracking-wide text-muted">Workspace</p>
-            <h2 class="max-w-3xl text-3xl font-semibold text-copy">Turn rough product thoughts into team-ready software proposals.</h2>
-            <p class="max-w-3xl text-base leading-7 text-muted">
-                This shell is the first pass at the shared product frame: app switcher on the left, context navigation beside it,
-                and a main work area ready for ideas, planning, development, testing, security, ops, and admin tools.
-            </p>
-        </section>
+        <x-ui.page-header
+            eyebrow="Workspace"
+            title="Turn rough product thoughts into team-ready software proposals."
+            description="This shell is the first pass at the shared product frame: app switcher on the left, context navigation beside it, and a main work area ready for ideas, planning, development, testing, security, ops, and admin tools."
+        />
 
         <section class="grid gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(18rem,1fr)]">
-            <div class="space-y-5 rounded-lg bg-panel px-5 py-5">
+            <x-ui.panel>
                 <div class="flex items-start justify-between gap-4">
                     <div class="space-y-2">
                         <p class="text-sm font-medium text-muted">Current draft</p>
                         <h3 class="text-xl font-semibold text-copy">Private idea workspace</h3>
                     </div>
-                    <span class="rounded-lg bg-accent-soft px-3 py-1 text-sm font-medium text-accent-strong">
+                    <x-ui.badge tone="accent">
                         Draft
-                    </span>
+                    </x-ui.badge>
                 </div>
 
                 <div class="space-y-4 text-sm leading-7 text-muted">
@@ -96,10 +93,12 @@
                         features can slot in without rewriting the frame.
                     </p>
                 </div>
-            </div>
+            </x-ui.panel>
 
-            <section class="space-y-4 rounded-lg bg-panel px-5 py-5">
-                <h3 class="text-sm font-semibold uppercase tracking-wide text-muted">Next in this app</h3>
+            <x-ui.panel
+                title="Next in this app"
+                subtitle="The app frame stays stable while the product grows around it."
+            >
 
                 <ul class="space-y-3 text-sm text-muted">
                     <li class="flex items-center gap-3">
@@ -115,7 +114,7 @@
                         Propose a polished draft to the team
                     </li>
                 </ul>
-            </section>
+            </x-ui.panel>
         </section>
     </div>
 </x-layouts.app-shell>

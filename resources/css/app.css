@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -8,4 +9,42 @@
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+:root {
+    --app-canvas: oklch(0.975 0.004 196);
+    --app-main: oklch(0.957 0.004 196);
+    --app-panel: oklch(0.995 0.001 196);
+    --app-toolbar: oklch(0.255 0.014 212);
+    --app-toolbar-muted: oklch(0.78 0.01 212);
+    --app-text: oklch(0.24 0.01 212);
+    --app-muted: oklch(0.5 0.01 212);
+    --app-accent: #2d8f77;
+    --app-accent-soft: #d6f0e8;
+    --app-accent-strong: #1f6e5d;
+}
+
+[data-theme='dark'] {
+    --app-canvas: oklch(0.18 0.01 212);
+    --app-main: oklch(0.16 0.009 212);
+    --app-panel: oklch(0.22 0.01 212);
+    --app-toolbar: oklch(0.12 0.008 212);
+    --app-toolbar-muted: oklch(0.74 0.01 212);
+    --app-text: oklch(0.96 0.004 196);
+    --app-muted: oklch(0.76 0.008 212);
+    --app-accent-soft: color-mix(in oklab, var(--app-accent) 18%, #101414);
+    --app-accent-strong: color-mix(in oklab, var(--app-accent) 78%, white);
+}
+
+@theme inline {
+    --color-canvas: var(--app-canvas);
+    --color-main: var(--app-main);
+    --color-panel: var(--app-panel);
+    --color-toolbar: var(--app-toolbar);
+    --color-toolbar-muted: var(--app-toolbar-muted);
+    --color-copy: var(--app-text);
+    --color-muted: var(--app-muted);
+    --color-accent: var(--app-accent);
+    --color-accent-soft: var(--app-accent-soft);
+    --color-accent-strong: var(--app-accent-strong);
 }

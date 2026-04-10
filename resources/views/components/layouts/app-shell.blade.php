@@ -4,8 +4,36 @@
     'contextItems' => [],
 ])
 
+@php
+    $themePreferences = auth()->user()?->theme_preferences ?? [];
+    $requestedThemeMode = $themePreferences['mode'] ?? 'system';
+    $themeMode = in_array($requestedThemeMode, ['light', 'dark', 'system'], true) ? $requestedThemeMode : 'system';
+
+    $themeStyleMap = [
+        'accent' => '--app-accent',
+    ];
+
+    $themeStyle = collect($themeStyleMap)
+        ->map(function (string $cssVariable, string $key) use ($themePreferences): ?string {
+            $value = $themePreferences[$key] ?? null;
+
+            if (! is_string($value) || ! preg_match('/^#[0-9A-Fa-f]{6}$/', $value)) {
+                return null;
+            }
+
+            return "{$cssVariable}: {$value}";
+        })
+        ->filter()
+        ->implode('; ');
+@endphp
+
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full">
+<html
+    lang="{{ str_replace('_', '-', app()->getLocale()) }}"
+    class="h-full"
+    data-theme-mode="{{ $themeMode }}"
+    style="{{ $themeStyle }}"
+>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,15 +43,23 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
 
+        <script>
+            const themeMode = document.documentElement.dataset.themeMode ?? 'system';
+            const systemDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const resolvedTheme = themeMode === 'system' ? (systemDarkMode ? 'dark' : 'light') : themeMode;
+
+            document.documentElement.dataset.theme = resolvedTheme;
+        </script>
+
         @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
             @vite(['resources/css/app.css', 'resources/js/app.js'])
         @endif
     </head>
-    <body class="min-h-full bg-gray-100 font-sans text-gray-950 antialiased dark:bg-gray-950 dark:text-gray-50">
+    <body class="min-h-full bg-canvas font-sans text-copy antialiased">
         <div class="min-h-screen lg:flex">
             <aside
                 aria-label="Application toolbar"
-                class="bg-gray-950 px-3 py-4 text-gray-100 dark:bg-black lg:flex lg:min-h-screen lg:w-20 lg:flex-col lg:items-center lg:px-0"
+                class="bg-toolbar px-3 py-4 text-white lg:flex lg:min-h-screen lg:w-20 lg:flex-col lg:items-center lg:px-0"
             >
                 <div class="flex items-center justify-between lg:mb-6 lg:w-full lg:flex-col lg:gap-4">
                     <a
@@ -52,7 +88,7 @@
                             @class([
                                 'flex min-w-16 flex-col items-center gap-2 rounded-lg px-2 py-3 text-center text-[0.7rem] transition-colors',
                                 'bg-white/12 text-white' => $item['current'] ?? false,
-                                'text-gray-300 hover:bg-white/8 hover:text-white' => ! ($item['current'] ?? false),
+                                'text-toolbar-muted hover:bg-white/8 hover:text-white' => ! ($item['current'] ?? false),
                             ])
                         >
                             <span class="flex size-9 items-center justify-center rounded-lg bg-white/8">
@@ -67,14 +103,14 @@
             <div class="flex min-w-0 flex-1 flex-col lg:flex-row">
                 <nav
                     aria-label="Context navigation"
-                    class="bg-white px-5 py-5 dark:bg-gray-900 lg:w-72 lg:px-6 lg:py-8"
+                    class="bg-panel px-5 py-5 lg:w-72 lg:px-6 lg:py-8"
                 >
                     <div class="mb-6 flex items-center gap-3">
-                        <span class="flex size-10 items-center justify-center rounded-lg bg-amber-100 text-amber-700 dark:bg-amber-400/10 dark:text-amber-300">
+                        <span class="flex size-10 items-center justify-center rounded-lg bg-accent-soft text-accent-strong">
                             <x-heroicon-o-light-bulb class="size-5" />
                         </span>
                         <div>
-                            <p class="text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">Current app</p>
+                            <p class="text-xs font-medium uppercase tracking-wide text-muted">Current app</p>
                             <h1 class="text-lg font-semibold">Ideas</h1>
                         </div>
                     </div>
@@ -86,11 +122,11 @@
                                     href="{{ $item['href'] ?? '#' }}"
                                     @class([
                                         'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors',
-                                    'bg-gray-100 font-medium text-gray-950 dark:bg-gray-800 dark:text-white' => $item['current'] ?? false,
-                                    'text-gray-600 hover:bg-gray-100 hover:text-gray-950 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-white' => ! ($item['current'] ?? false),
-                                ])
+                                        'bg-main font-medium text-copy' => $item['current'] ?? false,
+                                        'text-muted hover:bg-main hover:text-copy' => ! ($item['current'] ?? false),
+                                    ])
                                 >
-                                    <span class="flex size-8 items-center justify-center rounded-lg bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-300">
+                                    <span class="flex size-8 items-center justify-center rounded-lg bg-main text-muted">
                                         <x-dynamic-component :component="$item['icon']" class="size-4" />
                                     </span>
                                     <span>{{ $item['label'] }}</span>
@@ -100,7 +136,7 @@
                     </ul>
                 </nav>
 
-                <main aria-label="Main content" class="min-w-0 flex-1 bg-gray-50 px-5 py-5 dark:bg-gray-950 lg:px-8 lg:py-8">
+                <main aria-label="Main content" class="min-w-0 flex-1 bg-main px-5 py-5 lg:px-8 lg:py-8">
                     {{ $slot }}
                 </main>
             </div>

@@ -31,3 +31,20 @@ it('allows admins to access the admin route', function (): void {
         ->get(route('admin.dashboard'))
         ->assertSuccessful();
 });
+
+it('shows the admin toolbar entry only to admins', function (): void {
+    $user = User::factory()->create();
+
+    $this->actingAs($user)
+        ->get(route('home'))
+        ->assertSuccessful()
+        ->assertDontSee('href="'.route('admin.dashboard').'"', false);
+
+    $admin = User::factory()->create();
+    $admin->assign('admin');
+
+    $this->actingAs($admin)
+        ->get(route('home'))
+        ->assertSuccessful()
+        ->assertSee('href="'.route('admin.dashboard').'"', false);
+});

@@ -74,6 +74,7 @@
                                 <th class="py-3 pr-4 font-medium">Name</th>
                                 <th class="py-3 pr-4 font-medium">Email</th>
                                 <th class="py-3 pr-4 font-medium">Role</th>
+                                <th class="py-3 pr-4 font-medium text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -89,6 +90,12 @@
                                         <x-ui.badge :tone="$user->isAn('admin') ? 'accent' : 'neutral'">
                                             {{ $user->isAn('admin') ? 'Admin' : 'User' }}
                                         </x-ui.badge>
+                                    </td>
+                                    <td class="py-3 pr-4 text-right">
+                                        <form method="POST" action="{{ route('admin.users.impersonate', $user) }}">
+                                            @csrf
+                                            <x-ui.button variant="ghost" type="submit">Impersonate</x-ui.button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

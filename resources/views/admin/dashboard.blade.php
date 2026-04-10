@@ -74,5 +74,14 @@
                 but it stays behind the authorization gate and will grow into user, role, and system management from here.
             </p>
         </x-ui.panel>
+
+        @if (session()->has('impersonator_id'))
+            <form method="POST" action="{{ route('admin.impersonation.destroy') }}">
+                @csrf
+                @method('DELETE')
+
+                <x-ui.button variant="secondary" type="submit">Stop impersonation</x-ui.button>
+            </form>
+        @endif
     </div>
 </x-layouts.app-shell>

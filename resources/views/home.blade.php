@@ -31,11 +31,6 @@
             'href' => '#ops',
             'icon' => 'heroicon-o-command-line',
         ],
-        [
-            'label' => 'Admin',
-            'href' => '#admin',
-            'icon' => 'heroicon-o-cog-6-tooth',
-        ],
     ];
 
     $contextItems = [
@@ -63,7 +58,12 @@
     ];
 @endphp
 
-<x-layouts.app-shell :title="config('app.name', 'Replicator')" :toolbar-items="$toolbarItems" :context-items="$contextItems">
+<x-layouts.app-shell
+    :title="config('app.name', 'Replicator')"
+    :toolbar-items="$toolbarItems"
+    :context-items="$contextItems"
+    :show-admin-entry="true"
+>
     <div class="mx-auto max-w-5xl space-y-8">
         <x-ui.page-header
             eyebrow="Workspace"

@@ -2,6 +2,7 @@
     'title' => config('app.name', 'Replicator'),
     'toolbarItems' => [],
     'contextItems' => [],
+    'showAdminEntry' => false,
 ])
 
 @php
@@ -90,6 +91,15 @@
                             :current="$item['current'] ?? false"
                         />
                     @endforeach
+
+                    @if ($showAdminEntry && auth()->user()?->isAn('admin'))
+                        <x-app.toolbar-item
+                            href="{{ route('admin.dashboard') }}"
+                            label="Admin"
+                            icon="heroicon-o-shield-check"
+                            :current="request()->routeIs('admin.*')"
+                        />
+                    @endif
                 </nav>
             </aside>
 

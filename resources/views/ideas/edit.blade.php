@@ -82,12 +82,27 @@
                 <p class="text-sm text-muted">
                     Ask the local model to refine the current draft context.
                 </p>
-                <form method="POST" action="{{ route('ideas.refine', $idea) }}">
-                    @csrf
-                    <x-ui.button variant="secondary" type="submit">Refine with AI</x-ui.button>
-                </form>
+                <div class="flex items-center gap-3">
+                    <form method="POST" action="{{ route('ideas.refine', $idea) }}">
+                        @csrf
+                        <x-ui.button variant="secondary" type="submit">Refine with AI</x-ui.button>
+                    </form>
+
+                    <form method="POST" action="{{ route('ideas.propose', $idea) }}">
+                        @csrf
+                        <x-ui.button type="submit">Propose project</x-ui.button>
+                    </form>
+                </div>
             </div>
         </x-ui.panel>
+
+        @if (session('proposedProjectId'))
+            <x-ui.panel class="max-w-3xl" title="Project created">
+                <p class="text-sm text-muted">
+                    This draft was promoted to a proposed project and linked back to the source idea.
+                </p>
+            </x-ui.panel>
+        @endif
 
         @if (session()->has('ideaRefinement'))
             @php($ideaRefinement = session('ideaRefinement'))

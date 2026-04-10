@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Idea;
+use App\Models\Project;
 use App\Services\Ideas\IdeaRefinementService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -94,5 +95,25 @@ class IdeaController extends Controller
         return redirect()
             ->route('ideas.edit', $idea)
             ->with('ideaRefinement', $service->refine($idea));
+    }
+
+    public function propose(Idea $idea): RedirectResponse
+    {
+        Gate::authorize('update', $idea);
+
+        $project = Project::query()->create([
+            'idea_id' => $idea->id,
+            'user_id' => $idea->user_id,
+            'title' => $idea->title,
+            'summary' => $idea->summary,
+            'details' => $idea->details,
+            'status' => 'proposed',
+            'proposed_at' => now(),
+        ]);
+
+        return redirect()
+            ->route('ideas.edit', $idea)
+            ->with('status', 'Idea proposed as a project.')
+            ->with('proposedProjectId', $project->id);
     }
 }

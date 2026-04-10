@@ -2,11 +2,23 @@
 
 use App\Http\Controllers\Admin\ImpersonationController;
 use App\Http\Controllers\Admin\UserController;
+use App\Models\Idea;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home');
 })->name('home');
+
+Route::middleware(['auth'])->group(function (): void {
+    Route::get('/ideas', function () {
+        return view('ideas.index', [
+            'ideas' => Idea::query()
+                ->whereBelongsTo(auth()->user())
+                ->orderByDesc('updated_at')
+                ->get(),
+        ]);
+    })->name('ideas.index');
+});
 
 Route::get('/admin', function () {
     return view('admin.dashboard');

@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Admin\ImpersonationController;
 use App\Http\Controllers\Admin\UserController;
-use App\Models\Idea;
+use App\Http\Controllers\IdeaController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -10,14 +10,7 @@ Route::get('/', function () {
 })->name('home');
 
 Route::middleware(['auth'])->group(function (): void {
-    Route::get('/ideas', function () {
-        return view('ideas.index', [
-            'ideas' => Idea::query()
-                ->whereBelongsTo(auth()->user())
-                ->orderByDesc('updated_at')
-                ->get(),
-        ]);
-    })->name('ideas.index');
+    Route::resource('ideas', IdeaController::class)->except(['show']);
 });
 
 Route::view('/planning', 'section-placeholder', ['title' => 'Planning'])->name('planning.index');

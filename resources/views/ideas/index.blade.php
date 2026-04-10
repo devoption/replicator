@@ -68,7 +68,11 @@
             eyebrow="Ideas"
             title="Capture rough thoughts before they become projects."
             description="This area is for quick notes, private drafting, and later proposal work."
-        />
+        >
+            <x-slot:actions>
+                <x-ui.button as="a" href="{{ route('ideas.create') }}">New idea</x-ui.button>
+            </x-slot:actions>
+        </x-ui.page-header>
 
         <div class="grid gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(18rem,1fr)]">
             <x-ui.panel title="Private drafts" subtitle="Start small and return when the thought is sharper.">
@@ -80,9 +84,14 @@
                                     <h3 class="font-semibold text-copy">{{ $idea->title }}</h3>
                                     <p class="text-sm text-muted">{{ $idea->summary }}</p>
                                 </div>
-                                <x-ui.badge :tone="$idea->shared_at ? 'accent' : 'neutral'">
-                                    {{ $idea->shared_at ? 'Shared' : 'Private' }}
-                                </x-ui.badge>
+                                <div class="flex items-center gap-2">
+                                    <x-ui.badge :tone="$idea->shared_at ? 'accent' : 'neutral'">
+                                        {{ $idea->shared_at ? 'Shared' : 'Private' }}
+                                    </x-ui.badge>
+                                    <a class="text-sm font-medium text-muted transition hover:text-copy" href="{{ route('ideas.edit', $idea) }}">
+                                        Edit
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     @empty

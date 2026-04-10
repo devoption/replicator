@@ -1,6 +1,7 @@
 @props([
     'label' => null,
     'error' => null,
+    'value' => null,
 ])
 
 @php
@@ -12,7 +13,7 @@
         <span class="text-sm font-medium text-copy">{{ $label }}</span>
     @endif
 
-    <textarea {{ $attributes->class([$fieldClasses]) }}></textarea>
+    <textarea {{ $attributes->class([$fieldClasses]) }}>{{ $value ?? $slot }}</textarea>
 
     @if ($error)
         <span class="text-sm text-red-500">{{ $error }}</span>

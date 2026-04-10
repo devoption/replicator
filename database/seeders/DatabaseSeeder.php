@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Silber\Bouncer\BouncerFacade as Bouncer;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,7 +16,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        Bouncer::role()->firstOrCreate([
+            'name' => 'admin',
+        ]);
+
+        Bouncer::role()->firstOrCreate([
+            'name' => 'user',
+        ]);
 
         User::factory()->create([
             'first_name' => 'Test',

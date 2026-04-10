@@ -83,19 +83,12 @@
 
                 <nav aria-label="Applications" class="mt-4 flex gap-2 overflow-x-auto lg:mt-0 lg:flex-1 lg:flex-col lg:items-center">
                     @foreach ($toolbarItems as $item)
-                        <a
-                            href="{{ $item['href'] ?? '#' }}"
-                            @class([
-                                'flex min-w-16 flex-col items-center gap-2 rounded-lg px-2 py-3 text-center text-[0.7rem] transition-colors',
-                                'bg-white/12 text-white' => $item['current'] ?? false,
-                                'text-toolbar-muted hover:bg-white/8 hover:text-white' => ! ($item['current'] ?? false),
-                            ])
-                        >
-                            <span class="flex size-9 items-center justify-center rounded-lg bg-white/8">
-                                <x-dynamic-component :component="$item['icon']" class="size-5" />
-                            </span>
-                            <span>{{ $item['label'] }}</span>
-                        </a>
+                        <x-app.toolbar-item
+                            :href="$item['href'] ?? '#'"
+                            :label="$item['label']"
+                            :icon="$item['icon']"
+                            :current="$item['current'] ?? false"
+                        />
                     @endforeach
                 </nav>
             </aside>
@@ -106,11 +99,11 @@
                     class="bg-panel px-5 py-5 lg:w-72 lg:px-6 lg:py-8"
                 >
                     <div class="mb-6 flex items-center gap-3">
-                        <span class="flex size-10 items-center justify-center rounded-lg bg-accent-soft text-accent-strong">
+                        <span class="flex size-10 items-center justify-center rounded-md bg-accent-soft text-accent-strong">
                             <x-heroicon-o-light-bulb class="size-5" />
                         </span>
                         <div>
-                            <p class="text-xs font-medium uppercase tracking-wide text-muted">Current app</p>
+                            <p class="text-xs font-medium uppercase text-muted">Current app</p>
                             <h1 class="text-lg font-semibold">Ideas</h1>
                         </div>
                     </div>
@@ -118,19 +111,12 @@
                     <ul class="space-y-1.5">
                         @foreach ($contextItems as $item)
                             <li>
-                                <a
-                                    href="{{ $item['href'] ?? '#' }}"
-                                    @class([
-                                        'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors',
-                                        'bg-main font-medium text-copy' => $item['current'] ?? false,
-                                        'text-muted hover:bg-main hover:text-copy' => ! ($item['current'] ?? false),
-                                    ])
-                                >
-                                    <span class="flex size-8 items-center justify-center rounded-lg bg-main text-muted">
-                                        <x-dynamic-component :component="$item['icon']" class="size-4" />
-                                    </span>
-                                    <span>{{ $item['label'] }}</span>
-                                </a>
+                                <x-app.context-nav-item
+                                    :href="$item['href'] ?? '#'"
+                                    :label="$item['label']"
+                                    :icon="$item['icon']"
+                                    :current="$item['current'] ?? false"
+                                />
                             </li>
                         @endforeach
                     </ul>

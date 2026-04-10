@@ -11,6 +11,7 @@ Route::get('/', function () {
 
 Route::middleware(['auth'])->group(function (): void {
     Route::resource('ideas', IdeaController::class)->except(['show']);
+    Route::post('/ideas/{idea}/refine', [IdeaController::class, 'refine'])->name('ideas.refine');
 });
 
 Route::view('/planning', 'section-placeholder', ['title' => 'Planning'])->name('planning.index');

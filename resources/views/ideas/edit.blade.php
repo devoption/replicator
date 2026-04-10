@@ -78,7 +78,44 @@
                 'cancelHref' => route('ideas.index'),
                 'idea' => $idea,
             ])
+            <div class="mt-6 flex items-center justify-between gap-4 border-t border-main/70 pt-6">
+                <p class="text-sm text-muted">
+                    Ask the local model to refine the current draft context.
+                </p>
+                <form method="POST" action="{{ route('ideas.refine', $idea) }}">
+                    @csrf
+                    <x-ui.button variant="secondary" type="submit">Refine with AI</x-ui.button>
+                </form>
+            </div>
         </x-ui.panel>
+
+        @if (session()->has('ideaRefinement'))
+            @php($ideaRefinement = session('ideaRefinement'))
+            <x-ui.panel class="max-w-3xl" title="AI refinement">
+                <div class="grid gap-4 md:grid-cols-2">
+                    <div>
+                        <p class="text-xs font-medium uppercase text-muted">Problem</p>
+                        <p class="mt-2 text-sm leading-6 text-copy">{{ $ideaRefinement['problem'] }}</p>
+                    </div>
+                    <div>
+                        <p class="text-xs font-medium uppercase text-muted">Users</p>
+                        <p class="mt-2 text-sm leading-6 text-copy">{{ $ideaRefinement['users'] }}</p>
+                    </div>
+                    <div>
+                        <p class="text-xs font-medium uppercase text-muted">Outcomes</p>
+                        <p class="mt-2 text-sm leading-6 text-copy">{{ $ideaRefinement['outcomes'] }}</p>
+                    </div>
+                    <div>
+                        <p class="text-xs font-medium uppercase text-muted">Scope gaps</p>
+                        <p class="mt-2 text-sm leading-6 text-copy">{{ $ideaRefinement['scope_gaps'] }}</p>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <p class="text-xs font-medium uppercase text-muted">Follow-up questions</p>
+                    <p class="mt-2 text-sm leading-6 text-copy">{{ $ideaRefinement['follow_up_questions'] }}</p>
+                </div>
+            </x-ui.panel>
+        @endif
 
         <x-ui.panel class="max-w-3xl" title="Delete draft">
             <form method="POST" action="{{ route('ideas.destroy', $idea) }}">

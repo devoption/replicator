@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Idea;
+use App\Services\Ideas\IdeaRefinementService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -84,5 +85,14 @@ class IdeaController extends Controller
         return redirect()
             ->route('ideas.index')
             ->with('status', 'Idea draft deleted.');
+    }
+
+    public function refine(Idea $idea, IdeaRefinementService $service): RedirectResponse
+    {
+        Gate::authorize('update', $idea);
+
+        return redirect()
+            ->route('ideas.edit', $idea)
+            ->with('ideaRefinement', $service->refine($idea));
     }
 }

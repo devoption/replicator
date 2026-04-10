@@ -1,0 +1,62 @@
+name: Feature
+description: Propose a narrowly scoped product or platform change.
+title: "feat: "
+labels:
+  - enhancement
+body:
+  - type: input
+    id: goal
+    attributes:
+      label: Goal
+      description: What outcome should this issue produce?
+      placeholder: Add authentication backend flows with Fortify.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: What is included in this issue?
+      placeholder: |
+        - Install package
+        - Configure service provider
+        - Add required routes and views
+    validations:
+      required: true
+  - type: textarea
+    id: out_of_scope
+    attributes:
+      label: Out of Scope
+      description: What is intentionally excluded from this issue?
+      placeholder: Public registration, role management, and admin UI changes.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance Criteria
+      description: What must be true when this issue is complete?
+      placeholder: |
+        - Users can log in
+        - Password reset flow works
+        - Feature tests cover guest and authenticated behavior
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies
+      description: What other issues or decisions must land first?
+      placeholder: Depends on Livewire setup issue.
+    validations:
+      required: true
+  - type: textarea
+    id: test_plan
+    attributes:
+      label: Test Plan
+      description: How will this issue be verified?
+      placeholder: |
+        - Pest feature tests for auth routes
+        - Manual browser check for login and reset flows
+    validations:
+      required: true

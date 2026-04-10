@@ -1,0 +1,62 @@
+name: Chore
+description: Track a narrowly scoped non-feature change such as tooling, CI, or project setup.
+title: "chore: "
+labels:
+  - documentation
+body:
+  - type: input
+    id: goal
+    attributes:
+      label: Goal
+      description: What outcome should this issue produce?
+      placeholder: Add automated semantic release tagging.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: What is included in this issue?
+      placeholder: |
+        - Add GitHub Actions workflow
+        - Configure release tooling
+        - Document the expected merge behavior
+    validations:
+      required: true
+  - type: textarea
+    id: out_of_scope
+    attributes:
+      label: Out of Scope
+      description: What is intentionally excluded from this issue?
+      placeholder: Product feature development or unrelated repo cleanup.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance Criteria
+      description: What must be true when this issue is complete?
+      placeholder: |
+        - Workflow exists in the repo
+        - It runs on main merges
+        - Release behavior is documented
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies
+      description: What other issues or decisions must land first?
+      placeholder: None.
+    validations:
+      required: true
+  - type: textarea
+    id: test_plan
+    attributes:
+      label: Test Plan
+      description: How will this issue be verified?
+      placeholder: |
+        - Validate workflow syntax
+        - Confirm expected triggers and permissions
+    validations:
+      required: true

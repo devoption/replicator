@@ -1,0 +1,59 @@
+name: Bug
+description: Report a narrowly scoped defect with a clear reproduction path.
+title: "fix: "
+labels:
+  - bug
+body:
+  - type: input
+    id: goal
+    attributes:
+      label: Goal
+      description: What problem should this issue resolve?
+      placeholder: Fix impersonation logout returning to the wrong session.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: What part of the system is affected?
+      placeholder: Admin impersonation stop flow.
+    validations:
+      required: true
+  - type: textarea
+    id: out_of_scope
+    attributes:
+      label: Out of Scope
+      description: What is intentionally excluded from this fix?
+      placeholder: Broader auth refactors or unrelated admin cleanup.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance Criteria
+      description: What must be true when this issue is complete?
+      placeholder: |
+        - Bug is reproducibly fixed
+        - Regression coverage exists
+        - Related flows still work
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies
+      description: What other issues or decisions must land first?
+      placeholder: None known.
+    validations:
+      required: true
+  - type: textarea
+    id: test_plan
+    attributes:
+      label: Test Plan
+      description: How will this issue be verified?
+      placeholder: |
+        - Add regression test
+        - Reproduce before and after locally
+    validations:
+      required: true

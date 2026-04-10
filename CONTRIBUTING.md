@@ -86,7 +86,7 @@ PRs should avoid unrelated cleanup or opportunistic refactors unless the issue r
 
 `main` is the release branch. Merges to `main` are expected to use conventional commits so automated semantic versioning can infer the next release.
 
-The repository release workflow will:
+The repository uses Release Please on pushes to `main`. That workflow will:
 
 - inspect merged conventional commits
 - create or update a release pull request when needed

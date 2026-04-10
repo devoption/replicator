@@ -7,27 +7,27 @@
         ],
         [
             'label' => 'Planning',
-            'href' => '#planning',
+            'href' => route('planning.index'),
             'icon' => 'heroicon-o-clipboard-document-list',
         ],
         [
             'label' => 'Development',
-            'href' => '#development',
+            'href' => route('development.index'),
             'icon' => 'heroicon-o-code-bracket-square',
         ],
         [
             'label' => 'Testing',
-            'href' => '#testing',
+            'href' => route('testing.index'),
             'icon' => 'heroicon-o-beaker',
         ],
         [
             'label' => 'Security',
-            'href' => '#security',
+            'href' => route('security.index'),
             'icon' => 'heroicon-o-shield-check',
         ],
         [
             'label' => 'Ops',
-            'href' => '#ops',
+            'href' => route('ops.index'),
             'icon' => 'heroicon-o-command-line',
         ],
     ];
@@ -46,7 +46,7 @@
         ],
         [
             'label' => 'Roles',
-            'href' => '#roles',
+            'href' => route('admin.roles.index'),
             'icon' => 'heroicon-o-shield-check',
         ],
     ];

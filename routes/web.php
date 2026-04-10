@@ -20,6 +20,12 @@ Route::middleware(['auth'])->group(function (): void {
     })->name('ideas.index');
 });
 
+Route::view('/planning', 'section-placeholder', ['title' => 'Planning'])->name('planning.index');
+Route::view('/development', 'section-placeholder', ['title' => 'Development'])->name('development.index');
+Route::view('/testing', 'section-placeholder', ['title' => 'Testing'])->name('testing.index');
+Route::view('/security', 'section-placeholder', ['title' => 'Security'])->name('security.index');
+Route::view('/ops', 'section-placeholder', ['title' => 'Ops'])->name('ops.index');
+
 Route::get('/admin', function () {
     return view('admin.dashboard');
 })->middleware(['auth', 'can:access-admin'])->name('admin.dashboard');
@@ -30,4 +36,5 @@ Route::middleware(['auth', 'can:access-admin'])->prefix('admin')->name('admin.')
     Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
     Route::post('/users/{user}/impersonate', [ImpersonationController::class, 'store'])->name('users.impersonate');
     Route::delete('/impersonation', [ImpersonationController::class, 'destroy'])->name('impersonation.destroy');
+    Route::view('/roles', 'section-placeholder', ['title' => 'Roles'])->name('roles.index');
 });
